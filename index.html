@@ -8,14 +8,14 @@
       var email = document.getElementById("email").value;
       var loanAmount = document.getElementById("loanAmount").value;
       var panCard = document.getElementById("panCard").value;
-
+      // validate email
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     alert("Please enter a valid email address.");
     return;
   }
 
-      // Store data in sessionStorage
+      // Store data 
       sessionStorage.setItem("fullName", fullName);
       sessionStorage.setItem("email", email);
       sessionStorage.setItem("loanAmount", loanAmount);
@@ -24,7 +24,7 @@
       // Redirect to confirmation page
       window.location.href = "confirm.html";
     }
-
+    //convert into words
     function convertToWords(number) {
       var words = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
       var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
@@ -49,7 +49,7 @@
     function updateLoanAmountInWords() {
   var loanAmount = document.getElementById("loanAmount").value;
   var loanAmountDigits = loanAmount.length;
-
+      //check the digit
   if (loanAmountDigits > 9) {
     alert("Loan amount must be 9 digits or less.");
     return;
