@@ -8,6 +8,11 @@
       var email = document.getElementById("email").value;
       var loanAmount = document.getElementById("loanAmount").value;
       var panCard = document.getElementById("panCard").value;
+      
+      if (loanAmount.length !== 9) {
+    alert("Loan amount must be 9 digits.");
+    return;
+  }
 
       // Store data in sessionStorage
       sessionStorage.setItem("fullName", fullName);
@@ -45,6 +50,7 @@
       var amountInWords = convertToWords(loanAmount);
       document.getElementById("loanAmountInWords").textContent = amountInWords + " Rupees";
     }
+    
   </script>
 </head>
 <body>
