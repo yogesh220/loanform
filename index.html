@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Submission</title>
+  <script type="text/javascript">
+    function submitForm() {
+      var fullName = document.getElementById("fullName").value;
+      var email = document.getElementById("email").value;
+      var loanAmount = document.getElementById("loanAmount").value;
+      var panCard = document.getElementById("panCard").value;
+
+      // Store data in sessionStorage
+      sessionStorage.setItem("fullName", fullName);
+      sessionStorage.setItem("email", email);
+      sessionStorage.setItem("loanAmount", loanAmount);
+      sessionStorage.setItem("panCard", panCard);
+
+      // Redirect to confirmation page
+      window.location.href = "confirm.html";
+    }
+
+    function convertToWords(number) {
+      var words = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+      var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+      var amountInWords = "";
+
+      if (number === 0)
+        return "Zero";
+      else if (number < 20)
+        return words[number];
+      else if (number < 100)
+        return tens[Math.floor(number / 10)] + " " + convertToWords(number % 10);
+      else if (number < 1000)
+        return words[Math.floor(number / 100)] + " Hundred " + convertToWords(number % 100);
+      else if (number < 100000)
+        return convertToWords(Math.floor(number / 1000)) + " Thousand " + convertToWords(number % 1000);
+      else if (number < 10000000)
+        return convertToWords(Math.floor(number / 100000)) + " Lakh " + convertToWords(number % 100000);
+      else
+        return convertToWords(Math.floor(number / 10000000)) + " Crore " + convertToWords(number % 10000000);
+    }
+
+    function updateLoanAmountInWords() {
+      var loanAmount = parseInt(document.getElementById("loanAmount").value);
+      var amountInWords = convertToWords(loanAmount);
+      document.getElementById("loanAmountInWords").textContent = amountInWords + " Rupees";
+    }
+  </script>
+</head>
+<body>
+  <form>
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required><br>
+
+    <label for="loanAmount">Loan Amount:</label>
+    <input type="number" id="loanAmount" required oninput="updateLoanAmountInWords()"><br>
+    <div id="loanAmountInWords"></div>
+
+    <label for="panCard">PAN Card:</label>
+    <input type="text" id="panCard" required pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}" title="Please enter PAN number in the format ABCDE1234F."><br>
+
+    <input type="button" value="Submit" onclick="submitForm()">
+  </form>
+
+  <script type="text/javascript">
+    // On page load
+    updateLoanAmountInWords();
+  </script>
+</body>
+</html>
