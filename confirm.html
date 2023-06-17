@@ -41,7 +41,7 @@
 </head>
 <body onload="generateVerificationCode()">
   <h1>Confirmation Page</h1>
-  <p>Dear <span id="fullName"></span>,</p>
+  <p>Dear <span id="firstName"></span>,</p>
   <p>Thank you for your inquiry. A 4-digit verification number has been sent to your email: <span id="email"></span>. Please enter it in the following box and submit for confirmation:</p>
 
   <form id="verificationForm">
@@ -57,9 +57,11 @@
     var fullName = sessionStorage.getItem("fullName");
     var email = sessionStorage.getItem("email");
 
-    
+    // Extract the first name from the full name
+    var firstName = fullName.split(" ")[0];
+
     // Display the extracted first name and email in the corresponding elements
-    document.getElementById("fullName").textContent = fullName;
+    document.getElementById("firstName").textContent = firstName;
     document.getElementById("email").textContent = email;
     document.getElementById("remainingAttempts").textContent = 3 - attempts;
   </script>

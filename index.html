@@ -8,9 +8,10 @@
       var email = document.getElementById("email").value;
       var loanAmount = document.getElementById("loanAmount").value;
       var panCard = document.getElementById("panCard").value;
-      
-      if (loanAmount.length !== 9) {
-    alert("Loan amount must be 9 digits.");
+
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert("Please enter a valid email address.");
     return;
   }
 
@@ -46,10 +47,18 @@
     }
 
     function updateLoanAmountInWords() {
-      var loanAmount = parseInt(document.getElementById("loanAmount").value);
-      var amountInWords = convertToWords(loanAmount);
-      document.getElementById("loanAmountInWords").textContent = amountInWords + " Rupees";
-    }
+  var loanAmount = document.getElementById("loanAmount").value;
+  var loanAmountDigits = loanAmount.length;
+
+  if (loanAmountDigits > 9) {
+    alert("Loan amount must be 9 digits or less.");
+    return;
+  }
+
+  var amountInWords = convertToWords(parseInt(loanAmount));
+  document.getElementById("loanAmountInWords").textContent = amountInWords + " Rupees";
+}
+
     
   </script>
 </head>
