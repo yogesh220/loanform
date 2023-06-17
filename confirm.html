@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Confirmation Page</title>
+  <script type="text/javascript">
+    var verificationCode; // Global variable to store the verification code
+    var attempts = 0; // Variable to track the number of validation attempts
+
+    function generateVerificationCode() {
+      // Generate a random 4-digit number
+      verificationCode = Math.floor(1000 + Math.random() * 9000);
+      console.log("Verification Code:", verificationCode);
+    }
+
+    function validateOTP() {
+      var enteredOTP = document.getElementById("otp").value;
+
+      if (enteredOTP === verificationCode.toString()) {
+        document.getElementById("verificationForm").style.display = "none";
+        document.getElementById("successMessage").style.display = "block";
+
+        setTimeout(function() {
+          window.location.href = "index.html";
+        }, 3000);
+      } else {
+        // Validation failed
+        attempts++;
+        if (attempts >= 3) {
+
+          setTimeout(function() {
+            window.location.href = "404.html";
+          }, 3000);
+        } else {
+          // Reset OTP form and display error message
+          document.getElementById("otp").value = "";
+          document.getElementById("errorMessage").style.display = "block";
+        }
+      }
+    }
+  </script>
+</head>
+<body onload="generateVerificationCode()">
+  <h1>Confirmation Page</h1>
+  <p>Dear <span id="firstName"></span>,</p>
+  <p>Thank you for your inquiry. A 4-digit verification number has been sent to your email: <span id="email"></span>. Please enter it in the following box and submit for confirmation:</p>
+
+  <form id="verificationForm">
+    <input type="number" id="otp" required>
+    <button type="button" onclick="validateOTP()">Validate</button>
+  </form>
+
+  <p id="errorMessage" style="display: none; color: red;">Invalid verification code. Please try again. Remaining attempts: <span id="remainingAttempts"></span></p>
+  <p id="successMessage" style="display: none; color: green;">Validation Successful! Redirecting to home page...</p>
+
+  <script type="text/javascript">
+    // Retrieve data from sessionStorage
+    var fullName = sessionStorage.getItem("fullName");
+    var email = sessionStorage.getItem("email");
+
+    // Extract the first name from the full name
+    var firstName = fullName.split(" ")[0];
+
+    // Display the extracted first name and email in the corresponding elements
+    document.getElementById("firstName").textContent = firstName;
+    document.getElementById("email").textContent = email;
+    document.getElementById("remainingAttempts").textContent = 3 - attempts;
+  </script>
+</body>
+</html>
