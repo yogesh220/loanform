@@ -8,12 +8,23 @@
       var email = document.getElementById("email").value;
       var loanAmount = document.getElementById("loanAmount").value;
       var panCard = document.getElementById("panCard").value;
+      // Validate inputs
+      if (fullName.trim() === "" || email.trim() === "" || loanAmount.trim() === "" || panCard.trim() === "") {
+        alert("Please fill in all the required fields.");
+        return;
+      }
       // validate email
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     alert("Please enter a valid email address.");
     return;
   }
+  // Validate PAN Card
+  var panCardRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+      if (!panCardRegex.test(panCard)) {
+        alert("Please enter a valid PAN Card number.");
+        return;
+      }
 
       // Store data 
       sessionStorage.setItem("fullName", fullName);
