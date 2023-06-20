@@ -14,7 +14,7 @@
         alert("Please fill in all the required fields.");
         return;
       }
-      var fullNameRegex = /^[A-Z || a-z]{4,}[" "]{1}[A-Z||a-z]{4,}$/;;
+      var fullNameRegex = /^[A-Z || a-z]{4,}[" "]{0}[A-Z||a-z]{4,}$/;;
       if (!fullNameRegex.test(fullName)) {
     alert("Please enter a valid full name with a minimum of four characters and two words.");
     return;
