@@ -42,7 +42,7 @@
       var amountInWords = "";
 
       if (number === 0)
-        return "Zero";
+        return "";
       else if (number < 20)
         return words[number];
       else if (number < 100)
@@ -67,7 +67,7 @@
   }
 
   var amountInWords = convertToWords(parseInt(loanAmount));
-  document.getElementById("loanAmountInWords").textContent = amountInWords + " Rupees";
+  document.getElementById("loanAmountInWords").textContent = amountInWords + " Rs";
 }
 
     
