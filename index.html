@@ -44,31 +44,18 @@
     }
     //convert into words
     function convertToWords(number) {
-      var words = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-      var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
-      var amountInWords = "";
+  var words = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+  var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+  var amountInWords = "";
 
-      if (number === 0)
-        return "";
-      else if (number < 20)
-        return words[number];
-      else if (number < 100)
-        return tens[Math.floor(number / 10)] + " " + convertToWords(number % 10);
-      else if (number < 1000)
-        return words[Math.floor(number / 100)] + " Hundred " + convertToWords(number % 100);
-      else if (number < 100000)
-        return convertToWords(Math.floor(number / 1000)) + " Thousand " + convertToWords(number % 1000);
-      else if (number < 10000000)
-        return convertToWords(Math.floor(number / 100000)) + " Lakh " + convertToWords(number % 100000);
-      else
-        return convertToWords(Math.floor(number / 10000000)) + " Crore " + convertToWords(number % 10000000);
-    }
+  return number < 20 ? words[number] : number < 100 ? tens[Math.floor(number / 10)] + " " + convertToWords(number % 10) : number < 1000 ? words[Math.floor(number / 100)] + " Hundred " + convertToWords(number % 100) : number < 100000 ? convertToWords(Math.floor(number / 1000)) + " Thousand " + convertToWords(number % 1000) : number < 10000000 ? convertToWords(Math.floor(number / 100000)) + " Lakh " + convertToWords(number % 100000) : convertToWords(Math.floor(number / 10000000)) + " Crore " + convertToWords(number % 10000000);
+}
 
     function updateLoanAmountInWords() {
   var loanAmount = document.getElementById("loanAmount").value;
   var loanAmountDigits = loanAmount.length;
       //check the digit
-  if (loanAmountDigits > 9) {
+  if (loanAmountDigits >= 9) {
     alert("Loan amount must be 9 digits or less.");
     return;
   }
@@ -76,8 +63,7 @@
   var amountInWords = convertToWords(parseInt(loanAmount));
   document.getElementById("loanAmountInWords").textContent = amountInWords + " Rs";
 }
-
-    
+ 
   </script>
 </head>
 <body>
