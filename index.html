@@ -1,92 +1,343 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Form Submission</title>
-  <script type="text/javascript">
-    function submitForm() {
-      var fullName = document.getElementById("fullName").value;
-      var email = document.getElementById("email").value;
-      var loanAmount = document.getElementById("loanAmount").value;
-      var panCard = document.getElementById("panCard").value;
-      
-      // Validate inputs
-      if (fullName.trim() === "" || email.trim() === "" || loanAmount.trim() === "" || panCard.trim() === "") {
-        alert("Please fill in all the required fields.");
-        return;
-      }
-      var fullNameRegex = /^[A-Z || a-z]{4,}[" "]{0}[A-Z||a-z]{4,}$/;;
-      if (!fullNameRegex.test(fullName)) {
-    alert("Please enter a valid full name with a minimum of four characters and two words.");
-    return;
-  }
+    <title>Loan Form </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
 
-      // validate email
-      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    alert("Please enter a valid email address.");
-    return;
-  }
-  // Validate PAN Card
-  var panCardRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-      if (!panCardRegex.test(panCard)) {
-        alert("Please enter a valid PAN Card number.");
-        return;
-      }
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-      // Store data 
-      sessionStorage.setItem("fullName", fullName);
-      sessionStorage.setItem("email", email);
-      sessionStorage.setItem("loanAmount", loanAmount);
-      sessionStorage.setItem("panCard", panCard);
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-      // Redirect to confirmation page
-      window.location.href = "confirm.html";
-    }
-    //convert into words
-    function convertToWords(number) {
-  var words = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-  var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
-  var amountInWords = "";
+        form label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            display: inline-block;
+            width: 150px;
+        }
 
-  return number < 20 ? words[number] : number < 100 ? tens[Math.floor(number / 10)] + " " + convertToWords(number % 10) : number < 1000 ? words[Math.floor(number / 100)] + " Hundred " + convertToWords(number % 100) : number < 100000 ? convertToWords(Math.floor(number / 1000)) + " Thousand " + convertToWords(number % 1000) : number < 10000000 ? convertToWords(Math.floor(number / 100000)) + " Lakh " + convertToWords(number % 100000) : convertToWords(Math.floor(number / 10000000)) + " Crore " + convertToWords(number % 10000000);
-}
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="number"],
+        form input[type="text"] {
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            width: 200px;
+        }
 
-    function updateLoanAmountInWords() {
-  var loanAmount = document.getElementById("loanAmount").value;
-  var loanAmountDigits = loanAmount.length;
-      //check the digit
-  if (loanAmountDigits >= 9) {
-    alert("Loan amount must be 9 digits or less.");
-    return;
-  }
+        form input[type="button"] {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
 
-  var amountInWords = convertToWords(parseInt(loanAmount));
-  document.getElementById("loanAmountInWords").textContent = amountInWords + " Rs";
-}
- 
-  </script>
+        #loanAmountInWords {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .error-message {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .error-message.valid {
+            color: green;
+        }
+
+        .error-message.invalid {
+            color: red;
+        }
+    </style>
 </head>
+
 <body>
-  <form>
-    <label for="fullName">Full Name:</label>
-    <input type="text" id="fullName" required><br>
+    <div class="center">
+        <form>
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" required>
+            <span class="error-message" id="fullNameError"></span><br>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" required><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <span class="error-message" id="emailError"></span><br>
 
-    <label for="loanAmount">Loan Amount:</label>
-    <input type="number" id="loanAmount" required oninput="updateLoanAmountInWords()"><br>
-    <div id="loanAmountInWords"></div>
+          
+            <label for="panCard">PAN Card:</label>
+            <input type="text" id="panCard" required pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
+                title="Please enter PAN number in the format ABCDE1234F.">
+            <span class="error-message" id="panCardError"></span><br>
+            
+            <label for="loanAmount">Loan Amount:</label>
+            <input type="number" id="loanAmount" required oninput="updateLoanAmountInWords()" maxlength="9">
+            <span class="error-message" id="loanAmountError"></span>
 
-    <label for="panCard">PAN Card:</label>
-    <input type="text" id="panCard" required pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}" title="Please enter PAN number in the format ABCDE1234F."><br>
+            <div id="loanAmountInWords"></div><br>
+            <input type="button" value="Submit" onclick="submitForm()">
+        </form>
+    </div>
 
-    <input type="button" value="Submit" onclick="submitForm()">
-  </form>
+    <script type="text/javascript">
+        function submitForm() {
+            var fullName = document.getElementById("fullName").value;
+            var email = document.getElementById("email").value;
+            var loanAmount = document.getElementById("loanAmount").value;
+            var panCard = document.getElementById("panCard").value;
 
-  <script type="text/javascript">
-    // On page load
-    updateLoanAmountInWords();
-  </script>
+            // Validate inputs
+            var isValid = true;
+
+            if (fullName.trim() === "") {
+                showError("fullName", "Please enter your full name.");
+                isValid = false;
+            } else {
+                showValid("fullName");
+            }
+
+            if (email.trim() === "") {
+                showError("email", "Please enter your email address.");
+                isValid = false;
+            } else {
+                showValid("email");
+            }
+
+            if (loanAmount.trim() === "") {
+                showError("loanAmount", "Please enter the loan amount.");
+                isValid = false;
+            } else {
+                showValid("loanAmount");
+            }
+
+            if (panCard.trim() === "") {
+                showError("panCard", "Please enter your PAN Card number.");
+                isValid = false;
+            } else {
+                showValid("panCard");
+            }
+
+            if (!isValid) {
+                return;
+            }
+
+            //  validation for each field
+            var fullNameRegex = /^[A-Za-z]{4,}\s[A-Za-z]{4,}$/;
+            if (!fullNameRegex.test(fullName)) {
+                showError("fullName", "Please enter a valid full name with a minimum of four characters and two words.");
+                isValid = false;
+            } else {
+                showValid("fullName");
+            }
+
+            var emailRegex = /^[^\s@]+(?:\.[^\s@]+)*@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError("email", "Please enter a valid email address.");
+                isValid = false;
+            } else {
+                showValid("email");
+            }
+
+
+            var panCardRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+            if (!panCardRegex.test(panCard)) {
+                showError("panCard", "Please enter a valid PAN Card number.");
+                isValid = false;
+            } else {
+                showValid("panCard");
+            }
+
+            var loanAmountDigits = loanAmount.length;
+            if (loanAmountDigits > 9) {
+                showError("loanAmount", "Loan amount must be 9 digits or less.");
+                isValid = false;
+            } else {
+                showValid("loanAmount");
+            }
+
+            if (!isValid) {
+                return;
+            }
+
+            // Store data 
+            sessionStorage.setItem("fullName", fullName);
+            sessionStorage.setItem("email", email);
+            sessionStorage.setItem("loanAmount", loanAmount);
+            sessionStorage.setItem("panCard", panCard);
+
+            // Redirect to confirmation page
+            window.location.href = "confirm.html";
+        }
+
+
+        // Convert number to words
+        function convertToWords(number) {
+            var words = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+            var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+            var amountInWords = "";
+
+            if (number === 0) {
+                return "Zero";
+            }
+
+            if (number < 0) {
+                amountInWords += "Minus ";
+                number = Math.abs(number);
+            }
+
+            if (Math.floor(number / 10000000) > 0) {
+                amountInWords += convertToWords(Math.floor(number / 10000000)) + " Crore ";
+                number %= 10000000;
+            }
+
+            if (Math.floor(number / 100000) > 0) {
+                amountInWords += convertToWords(Math.floor(number / 100000)) + " Lakh ";
+                number %= 100000;
+            }
+
+            if (Math.floor(number / 1000) > 0) {
+                amountInWords += convertToWords(Math.floor(number / 1000)) + " Thousand ";
+                number %= 1000;
+            }
+
+            if (Math.floor(number / 100) > 0) {
+                amountInWords += convertToWords(Math.floor(number / 100)) + " Hundred ";
+                number %= 100;
+            }
+
+            if (number > 0) {
+                if (amountInWords !== "") {
+                    amountInWords += "and ";
+                }
+
+                if (number < 20) {
+                    amountInWords += words[number];
+                } else {
+                    amountInWords += tens[Math.floor(number / 10)];
+                    if ((number % 10) > 0) {
+                        amountInWords += " " + words[number % 10];
+                    }
+                }
+            }
+
+            return amountInWords;
+        }
+
+        window.addEventListener("load", function () {
+            // Check if loan amount is empty
+            var loanAmount = document.getElementById("loanAmount").value;
+            if (loanAmount === "") {
+                document.getElementById("loanAmountInWords").textContent = "Zero Rs";
+            } else {
+                updateLoanAmountInWords();
+            }
+        });
+
+        function updateLoanAmountInWords() {
+            var loanAmount = document.getElementById("loanAmount").value;
+            var loanAmountDigits = loanAmount.length;
+
+            // Check the digit
+            if (loanAmountDigits > 9) {
+                document.getElementById("loanAmount").value = loanAmount.slice(0, 9);
+                showError("loanAmount", "Loan amount must be 9 digits or less.");
+                return;
+            } else {
+                showValid("loanAmount");
+            }
+
+            var amountInWords = "";
+            if (loanAmount === "") {
+                amountInWords = "Zero";
+            } else {
+                amountInWords = convertToWords(parseInt(loanAmount));
+            }
+
+            document.getElementById("loanAmountInWords").textContent = amountInWords + " Rs";
+        }
+
+        // Inline validation for all fields
+        var fullNameInput = document.getElementById("fullName");
+        var emailInput = document.getElementById("email");
+        var panCardInput = document.getElementById("panCard");
+        var loanAmountInput = document.getElementById("loanAmount");
+
+        fullNameInput.addEventListener("input", function () {
+            var fullName = fullNameInput.value;
+            var fullNameRegex = /^[A-Za-z]{4,}\s[A-Za-z]{4,}$/;
+
+            if (!fullNameRegex.test(fullName)) {
+                showError("fullName", "Please enter a valid full name with a minimum of four characters and two words.");
+            } else {
+                showValid("fullName");
+            }
+        });
+
+        emailInput.addEventListener("input", function () {
+            var email = emailInput.value;
+            var emailRegex = /^[^\s@]+(?:\.[^\s@]+)*@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailRegex.test(email)) {
+                showError("email", "Please enter a valid email address.");
+            } else {
+                showValid("email");
+            }
+        });
+
+
+        panCardInput.addEventListener("input", function () {
+            var panCard = panCardInput.value;
+            var panCardRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+            if (!panCardRegex.test(panCard)) {
+                showError("panCard", "Please enter a valid PAN Card number.");
+            } else {
+                showValid("panCard");
+            }
+        });
+
+        loanAmountInput.addEventListener("input", function () {
+            var loanAmount = loanAmountInput.value;
+            var loanAmountDigits = loanAmount.length;
+
+            if (loanAmountDigits > 9) {
+                showError("loanAmount", "Loan amount must be 9 digits or less.");
+            } else {
+                showValid("loanAmount");
+            }
+        });
+
+        function showError(inputId, errorMessage) {
+            var errorElement = document.getElementById(inputId + "Error");
+            errorElement.textContent = errorMessage;
+            errorElement.classList.remove("valid");
+            errorElement.classList.add("invalid");
+        }
+
+        function showValid(inputId) {
+            if (inputId !== "loanAmount") { // Exclude loan amount field
+                var errorElement = document.getElementById(inputId + "Error");
+                errorElement.textContent = "Correct";
+                errorElement.classList.remove("invalid");
+                errorElement.classList.add("valid");
+            }
+        }
+    </script>
 </body>
 </html>
