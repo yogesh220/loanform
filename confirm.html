@@ -64,7 +64,7 @@
         var attempts = 0; // Variable to track the number of validation attempts
 
         function generateVerificationCode() {
-            // Generate a random 4-digit number
+            // Generate a otp 4-digit number
             verificationCode = Math.floor(1000 + Math.random() * 9000);
             console.log("Verification Code:", verificationCode);
         }
@@ -122,11 +122,11 @@
 </div>
 
     <script type="text/javascript">
-        // Retrieve data from sessionStorage
+        //  data from sessionStorage
         var fullName = sessionStorage.getItem("fullName");
         var email = sessionStorage.getItem("email");
 
-        // Extract the first name from the full name
+        //  first name from the full name
         var firstName = fullName.split(" ")[0];
 
         // Display the extracted first name and email in the corresponding elements
