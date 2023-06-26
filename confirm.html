@@ -72,7 +72,7 @@
         function validateOTP() {
             var enteredOTP = document.getElementById("otp").value;
 
-            // Check if the enteredOTP is a 4-digit number
+            // Check if the entered OTP is a 4-digit number
             if (/^\d{4}$/.test(enteredOTP)) {
                 document.getElementById("verificationForm").style.display = "none";
                 document.getElementById("successMessage").style.display = "block";
