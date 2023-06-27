@@ -119,18 +119,18 @@
                 showValid("email");
             }
 
-            if (loanAmount.trim() === "") {
-                showError("loanAmount", "Please enter the loan amount.");
-                isValid = false;
-            } else {
-                showValid("loanAmount");
-            }
-
             if (panCard.trim() === "") {
                 showError("panCard", "Please enter your PAN Card number.");
                 isValid = false;
             } else {
                 showValid("panCard");
+            }
+            
+            if (loanAmount.trim() === "") {
+                showError("loanAmount", "Please enter the loan amount.");
+                isValid = false;
+            } else {
+                showValid("loanAmount");
             }
 
             if (!isValid) {

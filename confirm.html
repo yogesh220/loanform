@@ -4,11 +4,11 @@
 <head>
     <title>Confirmation Page</title>
     <style>
-      body {
-          font-family: Arial, sans-serif;
-          background-color: #f2f2f2;
-          text-align: center;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+        }
 
         h1 {
             color: #333333;
@@ -64,18 +64,19 @@
         var attempts = 0; // Variable to track the number of validation attempts
 
         function generateVerificationCode() {
-            // Generate a otp 4-digit number
+            // Generate a random 4-digit number
             verificationCode = Math.floor(1000 + Math.random() * 9000);
             console.log("Verification Code:", verificationCode);
         }
 
         function validateOTP() {
             var enteredOTP = document.getElementById("otp").value;
+            
 
-            // Check if the entered OTP is a 4-digit number
-            if (/^\d{4}$/.test(enteredOTP)) {
-                document.getElementById("verificationForm").style.display = "none";
-                document.getElementById("successMessage").style.display = "block";
+            // Check if the enteredOTP is a 4-digit number
+            if (enteredOTP === verificationCode.toString()) {
+        document.getElementById("verificationForm").style.display = "none";
+        document.getElementById("successMessage").style.display = "block";
 
                 setTimeout(function () {
                     window.location.href = "https://pixel6.co/";
@@ -84,7 +85,7 @@
                 attempts++;
                 if (attempts >= 3) {
                     setTimeout(function () {
-                        window.location.href = "404.html";
+                        window.location.href = "https://pixel6.co/.htmle";
                     }, 3000);
                 } else {
                     document.getElementById("otp").value = "";
@@ -117,16 +118,16 @@
         </form>
 
         <p id="errorMessage">Invalid verification code. Please try again. Remaining attempts: <span
-          id="remainingAttempts">3</span></p>
-  <p id="successMessage">Validation Successful! Redirecting to the home page...</p>
-</div>
+                id="remainingAttempts">3</span></p>
+        <p id="successMessage">Validation Successful! Redirecting to the home page...</p>
+    </div>
 
     <script type="text/javascript">
-        //  data from sessionStorage
+        // Retrieve data from sessionStorage
         var fullName = sessionStorage.getItem("fullName");
         var email = sessionStorage.getItem("email");
 
-        //  first name from the full name
+        // Extract the first name from the full name
         var firstName = fullName.split(" ")[0];
 
         // Display the extracted first name and email in the corresponding elements
